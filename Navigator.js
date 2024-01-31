@@ -24,12 +24,14 @@ export default class Navigator {
         }
     }
 
-    static async toAbsolute(pathname) {
+    static async toAbsolute(pathname, newFile = false) {
         let cdpath = path.join(pth, pathname)
         if (path.isAbsolute(pathname)) {
             cdpath = pathname;
         }
-        await fs.access(cdpath);
+        if (!newFile) {
+            await fs.access(cdpath);
+        }
         if (pth.startsWith(Navigator.root) === false) {
             throw new Error("Too deep")
         }

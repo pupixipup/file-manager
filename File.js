@@ -1,13 +1,12 @@
 import ErrorHandler from "./ErrorHandler.js";
 import Navigator from "./Navigator.js";
 import fs from "fs"
-import fsp from "fs/promises"
 
 export default class File {
 
-  fileExists(filePath) {
+  static fileExists(filePath) {
     return new Promise((resolve, reject) => {
-      fs.access(filePath, fs.constants.F_OK)
+      fs.promises.access(filePath, fs.constants.F_OK)
         .then(() => {
           resolve(true);
         })
@@ -32,14 +31,13 @@ export default class File {
   }
   static async add(file) {
     try {
-      const name = await Navigator.toAbsolute(file);
+      const name = await Navigator.toAbsolute(file, true);
       const exists = await File.fileExists(name);
       if (exists) {
         throw new Error("file already exists");
       }
-      fs.appendFile(name, "");
+      fs.promises.appendFile(name, "");
     } catch (err) {
-      console.log(err)
       ErrorHandler.failed();
     }
   }
