@@ -31,8 +31,10 @@ rl.on("line", async (line) => {
   } else if (line.startsWith("cat ")) {
     const toRead = line.split(" ").slice(1).join(" ");
     File.cat(toRead)
+  } else if (line.startsWith("add ")) {
+    const toAdd = line.split(" ").slice(1).join(" ");
+    File.add(toAdd)
   }
-
   Util.logDirectory()
 })
 
