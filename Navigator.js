@@ -1,10 +1,10 @@
-const path = require('path')
-const os = require('os');
-const ErrorHandler = require("./ErrorHandler")
+import path from 'path';
+import os from "os"
+import { ErrorHandler } from './ErrorHandler.js';
 let pth = os.homedir();
-const fs = require('fs').promises;
+import fs from "fs/promises"
 
-class Navigator {
+export default class Navigator {
     static root = path.parse(os.homedir()).root;
     static get path() {
         return pth;
@@ -32,8 +32,7 @@ class Navigator {
             }
             await fs.access(cdpath);
             if (pth.startsWith(Navigator.root) === false) {
-                console.log(pth, Navigator.root)
-                throw new Error("too deep")
+                throw new Error("Too deep")
             }
                 pth = cdpath;
         } catch (err) {
@@ -41,6 +40,42 @@ class Navigator {
             ErrorHandler.failed();
         }
     }
+
+    static async ls() {
+        try {
+        const files = await fs.readdir(pth);
+        let lsTable = [];
+        
+        for (const file of files) {
+            let type;
+            const stat = await fs.stat(path.join(pth, file))
+            if (stat.isFile()) {
+                type = "file"
+            } else if (stat.isDirectory()) {
+                type = "directory"
+            }
+            lsTable.push({File: file, Type: type})
+        }
+        lsTable = lsTable.sort((a,b) => {
+            if (a.Type === "directory" && b.Type === "file") {
+                return -1;
+            }
+            if (a.Type === "file" && b.Type === "directory") {
+                return 1;
+            }
+            if (a.File < b.File) {
+                return -1;
+            }
+            if (a.File > b.File) {
+                return 1;
+            }
+            return 0;
+        })
+        console.table(lsTable)
+    }
+    catch {
+        ErrorHandler.failed();
+    }
+}
 }
 
-module.exports = Navigator

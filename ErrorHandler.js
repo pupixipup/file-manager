@@ -1,4 +1,4 @@
-class ErrorHandler {
+export class ErrorHandler {
   static failed () {
     console.log("Operation failed")
   }
@@ -6,5 +6,3 @@ class ErrorHandler {
     console.log("Invalid input")
   }
 }
-
-module.exports = ErrorHandler;

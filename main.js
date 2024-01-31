@@ -1,6 +1,6 @@
-const readline = require("readline")
-const Util = require("./Util")
-const Navigator = require("./Navigator")
+import readline from "readline"
+import Util from "./Util.js"
+import Navigator from "./Navigator.js"
 
 const args = process.argv.slice(2)
 
@@ -23,11 +23,12 @@ rl.on("line", async (line) => {
     console.log("go up")
     Navigator.up()
   } else if (line.startsWith("cd ")) {
-    const to = line.split(" ")[1];
-    console.log(to)
+    const to = line.split(" ").slice(1).join(" ");
     await Navigator.cd(to);
+  } else if (line === "ls") {
+    Navigator.ls()
   }
-  console.log(process.cwd())
+
   Util.logDirectory()
 })
 

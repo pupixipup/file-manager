@@ -1,5 +1,5 @@
-const Navigator = require("./Navigator")
-class Util {
+import Navigator from "./Navigator.js";
+export default class Util {
     static findUsername(args) {
         if(!args) return null;
         const userArg = args.find((arg) => arg.includes("--username="))
@@ -16,5 +16,3 @@ class Util {
         console.log(`You are currently in "${Navigator.path}"`)
     }
 }
-
-module.exports = Util
