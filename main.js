@@ -1,6 +1,7 @@
 import readline from "readline"
 import Util from "./Util.js"
 import Navigator from "./Navigator.js"
+import File from "./File.js"
 
 const args = process.argv.slice(2)
 
@@ -27,6 +28,9 @@ rl.on("line", async (line) => {
     await Navigator.cd(to);
   } else if (line === "ls") {
     Navigator.ls()
+  } else if (line.startsWith("cat ")) {
+    const toRead = line.split(" ").slice(1).join(" ");
+    File.cat(toRead)
   }
 
   Util.logDirectory()

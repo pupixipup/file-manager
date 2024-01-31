@@ -1,4 +1,4 @@
-export class ErrorHandler {
+export default class ErrorHandler {
   static failed () {
     console.log("Operation failed")
   }
