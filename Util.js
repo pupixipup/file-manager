@@ -1,10 +1,15 @@
 import Navigator from "./Navigator.js";
+import ErrorHandler from "./ErrorHandler.js";
 export default class Util {
     static findUsername(args) {
-        if (!args) return null;
-        const userArg = args.find((arg) => arg.includes("--username="))
-        if (!userArg) return null;
-        return userArg.split("=")[1]
+        try {
+            if (!args) return null;
+            const userArg = args.find((arg) => arg.includes("--username="))
+            if (!userArg) return null;
+            return userArg.split("=")[1]
+        } catch {
+            ErrorHandler.failed();
+          }
     }
     static greet(username) {
         let name = username || "User"

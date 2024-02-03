@@ -6,6 +6,7 @@ import fs from "fs"
 export default class File {
 
   static fileExists(filePath) {
+try {
     return new Promise((resolve, reject) => {
       fs.promises.access(filePath, fs.constants.F_OK)
         .then(() => {
@@ -19,6 +20,9 @@ export default class File {
           }
         });
     });
+  } catch {
+    ErrorHandler.failed();
+  }
   }
 
   static async cat(file) {
@@ -38,7 +42,7 @@ export default class File {
         throw new Error("file already exists");
       }
       fs.promises.appendFile(name, "");
-    } catch (err) {
+    } catch {
       ErrorHandler.failed();
     }
   }
@@ -68,7 +72,7 @@ export default class File {
         throw new Error("file already exists");
       }
       pipeline(fs.createReadStream(oldName), fs.createWriteStream(newName))
-    } catch (err) {
+    } catch {
       ErrorHandler.failed();
     }
   }
@@ -86,7 +90,6 @@ export default class File {
         fs.promises.unlink(oldName)
       })
     } catch (err) {
-      console.log(err)
       ErrorHandler.failed();
     }
   }
@@ -100,7 +103,6 @@ export default class File {
       }
       fs.promises.unlink(name);
     } catch (err) {
-      console.log(err)
       ErrorHandler.failed();
     }
   }

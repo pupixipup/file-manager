@@ -10,10 +10,6 @@ export default class Navigator {
     static get path() {
         return pth;
     }
-
-    static inRoot
-
-
     static up() {
         try {
             // Get the parent directory
@@ -26,6 +22,7 @@ export default class Navigator {
     }
 
     static async toAbsolute(pathname, newFile = false) {
+        try {
         pathname = Util.removePaddingQuotes(pathname)
         let cdpath = path.join(pth, pathname)
         if (path.isAbsolute(pathname)) {
@@ -37,7 +34,10 @@ export default class Navigator {
         if (pth.startsWith(Navigator.root) === false) {
             throw new Error("Too deep")
         }
-        return cdpath;
+        return cdpath; 
+    } catch {
+        ErrorHandler.failed();
+      }
     }
 
     static async cd(to) {
