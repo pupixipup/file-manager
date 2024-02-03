@@ -41,4 +41,36 @@ export default class File {
       ErrorHandler.failed();
     }
   }
+
+  static async rn(old, newn) {
+    try {
+      const oldName = await Navigator.toAbsolute(old, true);
+      const newName = await Navigator.toAbsolute(newn, true);
+      const oldExists = await File.fileExists(oldName);
+      const newExists = await File.fileExists(newName);
+      if (!oldExists || newExists) {
+        throw new Error("file already exists");
+      }
+      fs.promises.rename(oldName, newName);
+    } catch {
+      ErrorHandler.failed();
+    }
+  }
+
+  static async cp(old, newn) {
+    try {
+      const oldName = await Navigator.toAbsolute(old, true);
+      const newName = await Navigator.toAbsolute(newn, true);
+      const oldExists = await File.fileExists(oldName);
+      const newExists = await File.fileExists(newName);
+      if (!oldExists || newExists) {
+        throw new Error("file already exists");
+      }
+      fs.promises.cp(oldName, newName);
+    } catch (err) {
+      console.log(err)
+      ErrorHandler.failed();
+    }
+  }
+
 }
