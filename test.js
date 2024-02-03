@@ -16,8 +16,8 @@ export function customSplit(inputString) {
   return finalArray;
 }
 
-// Example usage
-const inputString = 'This is a "sample string" with spaces "inside quotes"';
-const result = customSplit(inputString);
+// // Example usage
+// const inputString = 'This is a "sample string" with spaces "inside quotes"';
+// const result = customSplit(inputString);
 
-console.log(result);
+// console.log(result);

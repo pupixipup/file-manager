@@ -23,16 +23,13 @@ export default class Util {
     static customSplit(inputString) {
         const regex = /\s(?=(?:(?:[^"]*"){2})*[^"]*$)/;
         const resultArray = inputString.split(regex);
-        // Remove quotes from the elements in the array
-        return resultArray.map(element => {
-            if (typeof element !== "string") return element;
-            const array = element.split("");
-            if (isQuote(array[0])) {
-                array = array.slice(1)
-            } if (isQuote(array[array.length - 1])) {
-                array.pop()
-            }
-            return array.join("")
-        });
+        return resultArray.map(this.removePaddingQuotes);
+    }
+
+    static removePaddingQuotes(str) {
+        if (str.startsWith('"') && str.endsWith('"') || str.startsWith("'") && str.endsWith("'")) {
+             return str.slice(1, -1);
+        }
+            return str;
     }
 }

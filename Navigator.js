@@ -1,5 +1,6 @@
 import path from 'path';
 import os from "os"
+import Util from './Util.js';
 import ErrorHandler from './ErrorHandler.js';
 let pth = os.homedir();
 import fs from "fs/promises"
@@ -25,6 +26,7 @@ export default class Navigator {
     }
 
     static async toAbsolute(pathname, newFile = false) {
+        pathname = Util.removePaddingQuotes(pathname)
         let cdpath = path.join(pth, pathname)
         if (path.isAbsolute(pathname)) {
             cdpath = pathname;

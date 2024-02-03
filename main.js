@@ -1,6 +1,7 @@
 import readline from "readline"
 import Util from "./Util.js"
 import Navigator from "./Navigator.js"
+import ErrorHandler from "./ErrorHandler.js"
 import File from "./File.js"
 import { customSplit } from "./test.js"
 
@@ -43,6 +44,15 @@ rl.on("line", async (line) => {
     const toAdd = line.split(" ").slice(1).join(" ");
     const str = customSplit(toAdd);
     File.cp(str[0], str[1]);
+  } else if (line.startsWith("mv ")) {
+    const toAdd = line.split(" ").slice(1).join(" ");
+    const str = customSplit(toAdd);
+    File.mv(str[0], str[1]);
+  } else if (line.startsWith("rm ")) {
+    const toAdd = line.split(" ").slice(1).join(" ");
+    File.rm(toAdd)
+  } else {
+    ErrorHandler.invInput();
   }
   Util.logDirectory()
 })
